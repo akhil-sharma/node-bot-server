@@ -15,6 +15,7 @@ const error_generator = require('../error_generator');
 
 var getWeatherData = (req, res) => {
     let encodedAddress = encodeURIComponent(req.query.data);
+    var formattedAddress = "";
 
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${geocode_api_key}`)
     .then((response) => {
@@ -24,7 +25,8 @@ var getWeatherData = (req, res) => {
         var latitude = response.data.results[0].geometry.location.lat;
         var longitude = response.data.results[0].geometry.location.lng;
         var weatherURL = `https://api.darksky.net/forecast/${dark_sky_api_key}/${latitude},${longitude}?units=si`;
-        console.log(response.data.results[0].formatted_address);
+        formattedAddress = response.data.results[0].formatted_address;
+        console.log(formattedAddress);
         return axios.get(weatherURL);
     }).then((response)=>{
         var temperature = response.data.currently.temperature;
@@ -37,7 +39,9 @@ var getWeatherData = (req, res) => {
             data:[
                 {temperature,
                 apparentTemperature,
-                summary}
+                summary,
+                formattedAddress
+            }
             ]
         });
     })
