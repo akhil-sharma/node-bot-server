@@ -1,7 +1,18 @@
 const axios = require('axios');
 
-const geocode_api_key = require('../api_keys').geocode_api_key || process.env.geocode_api_key;
-const dark_sky_api_key = require('../api_keys').dark_sky_api_key || process.env.dark_sky_api_key;
+//Conditional require for compatibility with Heroku
+if (process.env.geocode_api_key) {
+    const geocode_api_key = process.env.geocode_api_key;
+}else{
+    const geocode_api_key = require('../api_keys').geocode_api_key;
+}
+
+if (process.env.dark_sky_api_key) {
+    const dark_sky_api_key = process.env.dark_sky_api_key;
+}else{
+    const dark_sky_api_key = require('../api_keys').dark_sky_api_key;
+}
+
 const error_generator = require('../error_generator');
 
 var getWeatherData = (req, res) => {
@@ -26,9 +37,9 @@ var getWeatherData = (req, res) => {
         res.send({
             status: "SUCCESS",
             data:[
-                temperature,
+                {temperature,
                 apparentTemperature,
-                summary
+                summary}
             ]
         });
     })
