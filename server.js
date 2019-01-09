@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const weather = require('./weather/weather');
 const movies = require('./movies/movies');
+
 const error_generator = require('./error_generator');
 
 //Making sure it works on Heroku as well as the local machine
@@ -17,8 +18,6 @@ app.use((req, res, next) => {
     fs.appendFileSync('server.log', log);
     next();
 });
-
-
 
 //Handle the incoming requests
 app.get('/', (req, res)=>{
