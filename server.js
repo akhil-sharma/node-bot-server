@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 
 const weather = require('./weather/weather');
+const movies = require('./movies/movies');
 const error_generator = require('./error_generator');
 
 //Making sure it works on Heroku as well as the local machine
@@ -36,7 +37,7 @@ app.get('/weather', (req, res) => {
 //Handle the movies related requests
 app.get('/movies', (req, res) => {
     if (data = req.query.data){
-        
+        movies.getMovieRecommendations(req, res);
     }else{
         res.send(error_generator.generateErrorObj("Missing parameter: data"))
     }
@@ -50,7 +51,6 @@ app.get('/stocks', (req, res) => {
         res.send(error_generator.generateErrorObj("Missing parameter: data"))
     }
 });
-
 
 //Start listening on the designated port
 app.listen(port, ()=>{
