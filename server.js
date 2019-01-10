@@ -5,6 +5,7 @@ const weather         =                 require('./weather/weather');
 const movies          =                 require('./movies/movies');
 const number_facts    =                 require('./number_facts/number_facts');
 const site_rank       =                 require('./site_rank/site_rank');
+const jokes           =                 require('./jokes/jokes');
 
 const error_generator =                 require('./error_generator');
 
@@ -61,6 +62,11 @@ app.get('/rank', (req, res) => {
     }else{
         res.send(error_generator.generateErrorObj("Missing parameter: data"))
     }
+});
+
+//Handle the jokes requests
+app.get('/jokes', (req, res) => {
+    jokes.getJoke(req, res);    
 });
 
 //Handle the stocks related requests
