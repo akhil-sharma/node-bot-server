@@ -29,7 +29,6 @@ function retrieveMovieIDArray(moviesArray){
 var getMovieRecommendations = (req, res) => {
 
     let encodedText = plusEncodeText(req.query.data);
-    var movieDetailList;
     let movies = [];
     let promises = [];
 

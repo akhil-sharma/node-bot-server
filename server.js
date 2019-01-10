@@ -1,10 +1,11 @@
-const express = require('express');
-const fs = require('fs');
+const express         =                 require('express');
+const fs              =                 require('fs');
 
-const weather = require('./weather/weather');
-const movies = require('./movies/movies');
+const weather         =                 require('./weather/weather');
+const movies          =                 require('./movies/movies');
+const number_facts    =                 require('./number_facts/number_facts');
 
-const error_generator = require('./error_generator');
+const error_generator =                 require('./error_generator');
 
 //Making sure it works on Heroku as well as the local machine
 const port = process.env.PORT || 3000;
@@ -42,10 +43,19 @@ app.get('/movies', (req, res) => {
     }
 });
 
+//Handling number fact related queries
+app.get('/numbers', (req, res) => {
+    if (data = req.query.data){
+       number_facts.getNumberFacts(req, res);
+    }else{
+        res.send(error_generator.generateErrorObj("Missing parameter: data"))
+    }
+});
+
 //Handle the stocks related requests
 app.get('/stocks', (req, res) => {
     if (data = req.query.data){
-        
+        console.log(`Site under maintainance.`);
     }else{
         res.send(error_generator.generateErrorObj("Missing parameter: data"))
     }
