@@ -4,6 +4,7 @@ const fs              =                 require('fs');
 const weather         =                 require('./weather/weather');
 const movies          =                 require('./movies/movies');
 const number_facts    =                 require('./number_facts/number_facts');
+const site_rank       =                 require('./site_rank/site_rank');
 
 const error_generator =                 require('./error_generator');
 
@@ -47,6 +48,16 @@ app.get('/movies', (req, res) => {
 app.get('/numbers', (req, res) => {
     if (data = req.query.data){
        number_facts.getNumberFacts(req, res);
+    }else{
+        res.send(error_generator.generateErrorObj("Missing parameter: data"))
+    }
+});
+
+//Handling site rank related queries
+app.get('/rank', (req, res) => {
+    if (data = req.query.data){
+       console.log(data);
+       site_rank.getSiteRank(req, res);
     }else{
         res.send(error_generator.generateErrorObj("Missing parameter: data"))
     }
